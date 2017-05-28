@@ -7,13 +7,6 @@ from discord.ext import commands
 from Cogs.Utils.Configs import getTokens
 from Cogs.Utils.Messages import makeEmbed
 
-# Import translator
-try:
-    from microsofttranslator import Translator
-    translatorImported = True
-except ImportError:
-    translatorImported = True
-
 # Import WolframAlpha
 try:
     from wolframalpha import Client
@@ -27,7 +20,6 @@ class Internet:
     def __init__(self, sparcli):
         self.sparcli = sparcli
         self.urbanSite = 'https://api.urbandictionary.com/v0/define?term={}'
-        self.translator = None
         self.wolfClient = None
         self.nounlist = []
 
@@ -35,16 +27,6 @@ class Internet:
 
         self.dogCache = None
         self.dogCacheTimeout = 10
-
-        # Set up the translator, if you can
-        if translatorImported != False:
-            try:
-                tokens = getTokens()
-                secret = tokens['Microsoft Translate']['Secret']
-                transid = tokens['Microsoft Translate']['ID']
-                self.translator = Translator(transid, secret)
-            except KeyError:
-                pass
 
         # Set up Wolfram
         if wolframalphaImported == True:
@@ -87,37 +69,6 @@ class Internet:
         # Boop it out
         fullPun = filteredPun[1:-1]
         await self.sparcli.say(fullPun)
-
-    @commands.command(pass_context=True)
-    async def trans(self, ctx, langTo: str, *, toChange: str):
-        '''
-        Translates from one language into another.
-        '''
-
-        # See if the translator has been logged into
-        if self.translator == None:
-            try:
-                if translatorImported == False:
-                    raise KeyError
-                tokens = getTokens()
-                secret = tokens['Microsoft Translate']['Secret']
-                transid = tokens['Microsoft Translate']['ID']
-                self.translator = Translator(transid, secret)
-            except KeyError:
-                await self.sparcli.say('Translation has not been set up for this bot.')
-                return
-
-        # Send typing, so you can see it's being processed
-        await self.sparcli.send_typing(ctx.message.channel)
-
-        # Make sure that the language is supported
-        if langTo not in self.translator.get_languages():
-            await self.sparcli.say("The language provided is not supported.")
-            return
-
-        # If so, translate it
-        translatedText = self.translator.translate(toChange, langTo.lower())
-        await self.sparcli.say(translatedText)
 
     @commands.command(pass_context=True)
     async def wolfram(self, ctx, *, toDo: str):
