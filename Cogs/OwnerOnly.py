@@ -107,7 +107,7 @@ class OwnerOnly:
 
         else:
             loadedCogs = list(self.sparcli.cogs.keys())
-            toLoad = [i for i in loadedCogs if extention.lower() in i.lower()]
+            toLoad = [i for i in loadedCogs if toLoad.lower() in i.lower()]
             try:
                 extention = 'Cogs.{}'.format(toLoad[0])
             except IndexError:
