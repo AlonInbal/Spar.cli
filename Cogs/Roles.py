@@ -12,10 +12,10 @@ class RoleManagement:
     def __init__(self, sparcli):
         self.sparcli = sparcli
 
-    @commands.command(pass_context=True, aliases=['changecolour', 'changerolecolour', 'changerole', 'rolecolor', 'changecolor', 'changerolecolor'])
+    @commands.command(pass_context=True, aliases=['changecolour', 'changecolor', 'changerolecolour', 'changerolecolor'])
     @permissionChecker(check='manage_roles')
     @botPermission(check='manage_roles')
-    async def rolecolour(self, ctx, roleColour: str, *, roleName: str):
+    async def changecolour(self, ctx, roleColour: str, *, roleName: str):
         '''
         Changes the colour of a specified role.
         '''
@@ -40,7 +40,8 @@ class RoleManagement:
         '''
 
         if roleName == 'list':
-            return await self.iamlist(ctx)
+            await self.iamlist(ctx)
+            return
 
         connectedRoles = [i for i in ctx.message.server.roles if roleName.lower() in i.name.lower()]
         if len(connectedRoles) == 1:
@@ -80,6 +81,11 @@ class RoleManagement:
 
         # Get their role names
         assignableRoles = [i.name for i in ctx.message.server.roles if i.id in allowableIDs]
+
+        # There are no roles that you can add to yourself
+        if len(assignableRoles) == 0:
+            await self.sparcli.say('There are no self-assignable roles on this server.')
+            return
 
         # Print back out the user
         await self.sparcli.say('The following roles are self-assignable: ```\n* {}```'.format('\n* '.join(assignableRoles)))
@@ -139,10 +145,10 @@ class RoleManagement:
         # Print out to the user
         await self.sparcli.say('The role `{0.name}` with ID `{0.id}` can no longer be self-assigned.'.format(roleToGive))
 
-    @commands.command(pass_context=True, aliases=['makecolor'])
+    @commands.command(pass_context=True, aliases=['setcolor'])
     @permissionChecker(check='manage_roles')
     @botPermission(check='manage_roles')
-    async def makecolour(self, ctx, colour:str, user:Member=None):
+    async def setcolour(self, ctx, colour:str, user:Member=None):
         '''
         Creates a new role with a given colour, and assigns it to a user.
         '''
@@ -163,12 +169,15 @@ class RoleManagement:
             await self.sparcli.edit_role(server, role, colour=colourObj)
             created = False
         else:
-            role = await self.sparcli.create_role(server, name=user.id, colour=colourObj)
+            role = await self.sparcli.create_role(server, name='SPARCLI - {}'.format(user.id), colour=colourObj)
             await self.sparcli.add_roles(user, role)
             created = True
 
         # Print out to user
-        await self.sparcli.say('This role has been successfully {}. \nYou may need to move the positions of other roles to make it work properly.'.format({True:'created',False:'edited'}))
+        await self.sparcli.say(
+            'This role has been successfully {}. \n'
+            'You may need to move the positions of other roles to make it work properly.'.format({True:'created',False:'edited'})
+        )
 
 
 def setup(bot):
