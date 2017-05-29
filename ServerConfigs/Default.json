@@ -10,7 +10,8 @@
         "Joins": false,
         "Bans": false,
         "Starboard": false,
-        "Kicks": false
+        "Kicks": false,
+        "Deleteserverinvites": false
     },
     "Channels": {
         "Bans": "",
