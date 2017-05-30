@@ -1,11 +1,14 @@
-from aiohttp import ClientSession
+from aiohttp import ClientSession, BasicAuth
 from re import finditer
 from random import choice
 from collections import OrderedDict
+from xml.etree import ElementTree as ET
+from requests.auth import HTTPBasicAuth
 from discord import Member
 from discord.ext import commands
 from Cogs.Utils.Configs import getTokens
 from Cogs.Utils.Messages import makeEmbed
+from Cogs.Utils.Misc import htmlFixer
 
 # Import WolframAlpha
 try:
@@ -303,6 +306,60 @@ class Internet:
         e = makeEmbed(author=data.get('show_title'), image=data.get('poster'), fields=o)
         await self.sparcli.say(embed=e)
 
+    @commands.command(pass_context=True)
+    async def anime(self, ctx, *, animeName:str):
+        '''
+        Gives you the details of an anime
+        '''
+
+        # Make sure there are the correct tokens in the bot
+        tokens = getTokens()
+        userPass = tokens['MyAnimeList']
+        if '' in userPass.values():
+            await self.sparcli.say('The command has not been set up to work on this bot.')
+            return
+
+        # Authenticate
+        auth = BasicAuth(userPass['Username'], userPass['Password'])
+        url = 'https://myanimelist.net/api/anime/search.xml?q=' + animeName.replace(' ', '+')
+
+        # Send the request
+        async with self.session.get(url, auth=auth) as r:
+            resp = r.status
+            data = await r.text()
+
+        # Make sure everything's alright
+        if resp == 204:
+            await self.sparcli.say('The anime with the title `{}` could not be found.'.format(animeName.title()))
+            return
+        elif resp == 200:
+            pass
+        else:
+            await self.sparcli.say('There was an error with this bot\'s authentication details.')
+            return
+
+        # Parse the XML data
+        root = ET.fromstring(data)
+        anime = root[0]
+        o = OrderedDict()
+
+        # Plonk it into an embed
+        v = htmlFixer(anime[10].text)
+        v = v if len(v) < 1000 else v[:1000]
+        while v[-1] in ' .,?;\'"/!':
+            v = v[:-1]
+        v = v + '...'
+        o['Summary'] = (v, False)
+        o['Episodes'] = anime[4].text
+        o['Rating'] = anime[5].text + '/10.00'
+        o['Media Type'] = anime[6].text
+        o['Status'] = anime[7].text
+        image = anime[11].text
+        title = anime[1].text
+
+        # Echo out to the user
+        e = makeEmbed(author=title, image=image, fields=o)
+        await self.sparcli.say(embed=e)
 
 def setup(bot):
     bot.add_cog(Internet(bot))
