@@ -276,6 +276,33 @@ class Internet:
         e = makeEmbed(fields=o)
         await self.sparcli.say(embed=e)
 
+    @commands.command(pass_context=True)
+    async def netflix(self, ctx, *, showName:str):
+        '''
+        Gives you the details of a show on Netflix
+        '''
+
+        url = 'http://netflixroulette.net/api/api.php?title=' + showName
+        async with self.session.get(url) as r:
+            resp = r.status
+            data = await r.json()
+
+        if resp == 404:
+            await self.sparcli.say('The show with the title `{}` could not be found.'.format(showName.title()))
+            return
+
+        # Process the data
+        o = OrderedDict()
+        o['Summary'] = (data.get('summary'), False)
+        o['Release Year'] = data.get('release_year')
+        o['Rating'] = data.get('rating')
+        o['Runtime'] = data.get('runtime')
+        o['Category'] = data.get('category')
+        o['Link'] = '[Click here](https://www.netflix.com/title/{})'.format(data.get('show_id'))
+        o['ID'] = data.get('show_id')
+        e = makeEmbed(author=data.get('show_title'), image=data.get('poster'), fields=o)
+        await self.sparcli.say(embed=e)
+
 
 def setup(bot):
     bot.add_cog(Internet(bot))
