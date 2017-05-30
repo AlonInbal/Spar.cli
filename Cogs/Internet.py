@@ -45,14 +45,15 @@ class Internet:
     def __unload(self):
         self.session.close()
 
+    async def on_command(self, command, ctx):
+        if command.cog_name == 'Internet':
+            await self.sparcli.send_typing(ctx.message.channel)
+
     @commands.command(pass_context=True)
     async def pun(self, ctx):
         '''
         Gives a random pun from the depths of the internet.
         '''
-
-        # Send typing, so you can see it's being processed
-        await self.sparcli.send_typing(ctx.message.channel)
 
         # Read from page
         async with self.session.get('http://www.punoftheday.com/cgi-bin/randompun.pl') as r:
@@ -104,9 +105,6 @@ class Internet:
             except KeyError:
                 await self.sparcli.say('WolframAlpha has not been set up for this bot.')
                 return
-
-        # Send typing, so you can see it's being processed
-        await self.sparcli.send_typing(ctx.message.channel)
 
         # Sends query to Wolfram
         wolfResults = self.wolfClient.query(whatToSearch)
@@ -219,8 +217,6 @@ class Internet:
         '''
         Gets you an xkcd comic strip
         '''
-
-        await self.sparcli.send_typing(ctx.message.channel)
 
         # Parse the comic input into a URL
         if comicNumber == 'Latest':
