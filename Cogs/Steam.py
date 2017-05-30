@@ -4,6 +4,7 @@ from random import choice
 from re import finditer
 from discord.ext import commands 
 from Cogs.Utils.Messages import makeEmbed
+from Cogs.Utils.Misc import htmlFixer
 
 
 '''
@@ -16,15 +17,6 @@ Todo :: Add Steam game comparisons
 * http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=XXXXXXXXXXXXXXXXX&steamid=76561197960434622&format=json
 -- Returns owned games of a player from an ID64 and API key
 '''
-
-
-# Used so I can fix Steam game descriptions
-def descFixer(description:str):
-    fixes = [('<strong>', '**'), ('</strong>', '**'), ('<u>', '__'), ('</u>', '__'), 
-             ('<i>', '*'), ('</i>', '*'), ('<br>', '\n'), ('<br />', '\n'), ('&quot;', '"')]
-    for i in fixes:
-        description = description.replace(i[0], i[1])
-    return description
 
 
 class Steam:
@@ -113,7 +105,7 @@ class Steam:
         gameData = steamData[gameID]['data']
         retData['Name'] = gameData['name']
         desc = gameData['short_description']
-        desc = descFixer(desc)
+        desc = htmlFixer(desc)
         retData['Description'] = (desc, False)
         retData['Game ID'] = gameID
         try:

@@ -1,4 +1,4 @@
-def colourFixer(colour):
+def colourFixer(colour) -> str:
     '''Fixes a colour str into hex based on an input'''
 
     fixColour = colour.replace('#', '')
@@ -14,3 +14,11 @@ def colourFixer(colour):
     else:
         raise ValueError('The value given was not a valid argument.')
     return fixColour
+
+
+def htmlFixer(text:str) -> str:
+    fixes = [('<strong>', '**'), ('</strong>', '**'), ('<u>', '__'), ('</u>', '__'), 
+             ('<i>', '*'), ('</i>', '*'), ('<br>', '\n'), ('<br />', '\n'), ('&quot;', '"')]
+    for i in fixes:
+        text = text.replace(i[0], i[1])
+    return text
