@@ -361,5 +361,54 @@ class Internet:
         e = makeEmbed(author=title, image=image, fields=o)
         await self.sparcli.say(embed=e)
 
+    @commands.command(pass_context=True, aliases=['df'])
+    async def define(self, ctx, *, wordToDefine:str):
+        '''
+        Defines a word using the Oxford Dictionary
+        '''
+
+        wordToDefine = wordToDefine.lower()
+
+        # Make sure there are the correct tokens in the bot
+        tokens = getTokens()
+        userPass = tokens['OxfordDictionary']
+        if '' in userPass.values():
+            await self.sparcli.say('The command has not been set up to work on this bot.')
+            return
+
+        # Send a request to the server
+        base = 'https://od-api.oxforddictionaries.com/api/v1/entries/en/{}/definitions'
+        url = base.format(wordToDefine)
+        headers = {'app_id': userPass['ID'], 'app_key': userPass['Key']}
+        async with self.session.get(url, headers=headers) as r:
+            resp = r.status 
+            if resp == 404:
+                pass
+            else:
+                data = await r.json()
+
+        # Make sure there was a valid response
+        if resp == 404:
+            await self.sparcli.say('There were no definitions for the word `{}`.'.format(wordToDefine))
+            return
+
+        # Format the data into an embed
+        a = data['results']
+        b = a[0]
+        c = b['lexicalEntries']
+        d = c[0]
+        e = d['entries']
+        f = e[0]
+        g = f['senses']
+        definitions = [i['definitions'][0] for i in g]
+
+        o = OrderedDict()
+        for i, p in enumerate(definitions):
+            o['Definition #{}'.format(i+1)] = p 
+
+        e = makeEmbed(author='Definition of {}'.format(wordToDefine), fields=o, inline=False)
+        await self.sparcli.say(embed=e)
+
+
 def setup(bot):
     bot.add_cog(Internet(bot))

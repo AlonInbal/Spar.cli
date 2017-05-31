@@ -14,6 +14,10 @@
 		"Username": "",
 		"Password": ""
 	},
+	"OxfordDictionary": {
+		"ID": "",
+		"Key": ""
+	},
 	"OwnerIDs": [],
 	"BotID": ""
 }
