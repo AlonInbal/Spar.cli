@@ -23,7 +23,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def ev(self, ctx, *, content: str):
         '''
-        Evaluates a given Python expression.
+        Evaluates a given Python expression
         '''
 
         # Eval and print the answer
@@ -39,7 +39,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def ex(self, ctx, *, content: str):
         '''
-        Executes a given Python expression.
+        Executes a given Python expression
         '''
 
         # Eval and print the answer
@@ -57,7 +57,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def av(self, ctx, *, avatarUrl: str=None):
         '''
-        Changes the bot's avatar to a set URL.
+        Changes the bot's avatar to a set URL
         '''
 
         # Checks for the URL - either passed as argument or embed
@@ -81,7 +81,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def kill(self, ctx):
         '''
-        Kills the bot. Makes it deaded.
+        Kills the bot. Makes it deaded
         '''
 
         # If it is, tell the user the bot it dying
@@ -93,7 +93,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def rld(self, ctx, toLoad: str=None, doFully:str=False):
         '''
-        Reload an extention on the bot.
+        Reload an extention on the bot
         '''
 
         # Get list of loaded extentions
@@ -138,7 +138,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def uld(self, ctx, toLoad: str=None, doFully:str=False):
         '''
-        Reload an extention on the bot.
+        Reload an extention on the bot
         '''
 
         # Get list of loaded extentions
@@ -173,7 +173,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def loadmessage(self, ctx, messageID: str):
         '''
-        Loads a message into the bot chache.
+        Loads a message into the bot cache
         '''
 
         # Find and add the message
@@ -185,7 +185,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def restart(self, ctx):
         '''
-        Restarts the bot. Literally everything.
+        Restarts the bot. Literally everything
         '''
 
         # If it is, tell the user the bot it dying
@@ -197,7 +197,7 @@ class OwnerOnly:
     @permissionChecker(check='is_owner')
     async def serverinvite(self, ctx, *, serverName:str):
         '''
-        Gets an invite for a given server's name.
+        Gets an invite for a given server's name
         '''
 
         serverName = serverName.casefold()

@@ -26,7 +26,7 @@ class Music:
     @commands.command(pass_context=True, aliases=['p'])
     async def play(self, ctx, *, nameOfSong:str):
         '''
-        Plays a song from a YouTube search or URL.
+        Plays a song from a YouTube search or URL
         '''
 
         serverHandler = self.voice[ctx.message.server]
@@ -40,7 +40,7 @@ class Music:
     @commands.command(pass_context=True, aliases=['disconnect', 'dc'])
     async def leave(self, ctx):
         '''
-        Makes a bot on the server leave the joined voice channel.
+        Makes a bot on the server leave the joined voice channel
         '''
 
         serverHandler = self.voice[ctx.message.server]
@@ -54,7 +54,7 @@ class Music:
     @commands.command(pass_context=True, aliases=['v'])
     async def volume(self, ctx, volume:int=20):
         '''
-        Changes the volume of the currently playing music stream.
+        Changes the volume of the currently playing music stream
         '''
 
         serverHandler = self.voice[ctx.message.server]
@@ -67,7 +67,7 @@ class Music:
     @commands.command(pass_context=True)
     async def queued(self, ctx):
         '''
-        Gets you a list of what is currently queued.
+        Gets you a list of what is currently queued
         '''
 
         serverHandler = self.voice[ctx.message.server]
@@ -84,7 +84,7 @@ class Music:
     @permissionChecker(check='administrator')
     async def forceskip(self, ctx):
         '''
-        Forces the bot to skip to the next song.
+        Forces the bot to skip to the next song
         '''
 
         serverHandler = self.voice[ctx.message.server]
@@ -98,7 +98,7 @@ class Music:
     @commands.command(pass_context=True)
     async def musicisfucked(self, ctx):
         '''
-        For when the music stops working.
+        For when the music stops working
         '''
 
         i = ctx.message.server

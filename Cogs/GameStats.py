@@ -68,6 +68,7 @@ class GameStats(object):
         '''
         Gives you an overview of some Overwatch stats for the PC
         '''
+
         playType = battleTag.split(' ')[-1]
         battleTag = battleTag.split(' ')[0]
         if playType == battleTag:
@@ -83,6 +84,7 @@ class GameStats(object):
         '''
         Gives you an overview of some Overwatch stats for PSN
         '''
+        
         playType = battleTag.split(' ')[-1]
         battleTag = battleTag.split(' ')[0]
         if playType == battleTag:

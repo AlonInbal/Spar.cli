@@ -14,7 +14,7 @@ class Levels:
     @commands.command(pass_context=True)
     async def xp(self, ctx, user:Member=None):
         '''
-        Shows you how much experience you have.
+        Shows you how much experience you have
         '''
 
         if user == None:
@@ -28,7 +28,7 @@ class Levels:
     @commands.command(pass_context=True)
     async def level(self, ctx, user:Member=None):
         '''
-        Shows you how much experience you have.
+        Shows you how much experience you have
         '''
 
         if user == None:
@@ -43,7 +43,7 @@ class Levels:
     @commands.command(pass_context=True)
     async def leaderboard(self, ctx):
         '''
-        Shows you the top ten members on your server.
+        Shows you the top ten members on your server
         '''
 
         # Get all of the users in the server and reverse their values

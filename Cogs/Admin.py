@@ -19,7 +19,7 @@ class Admin:
     @botPermission(check='ban_members', compare=True)
     async def ban(self, ctx, user:Member, *, reason:str=None):
         '''
-        Bans a user from the server.
+        Bans a user from the server
         '''
 
         if reason == None:
@@ -56,7 +56,7 @@ class Admin:
     @botPermission(check='kick_members', compare=True)
     async def kick(self, ctx, user:Member, *, reason:str=None):
         '''
-        Kicks a user from the server.
+        Kicks a user from the server
         '''
 
         if reason == None:
@@ -93,7 +93,7 @@ class Admin:
     @botPermission(check='manage_messages')
     async def purge(self, ctx, amount: int):
         '''
-        Deletes a number of messages from a channel.
+        Deletes a number of messages from a channel
         '''
 
         # Make sure the calling member isn't an idiot
@@ -112,7 +112,7 @@ class Admin:
     @botPermission(check='manage_nicknames', compare=True)
     async def rename(self, ctx, user:Member, *, name:str=None):
         '''
-        Changes the nickname of a member.
+        Changes the nickname of a member
         '''
 
         await self.sparcli.change_nickname(user, name)
@@ -165,7 +165,7 @@ class Admin:
     @botPermission(check='manage_server')
     async def serverimage(self, ctx, *, icon:str=None):
         '''
-        Changes the icon of the server.
+        Changes the icon of the server
         '''
 
         # Sees if there's an image as an icon
@@ -187,7 +187,6 @@ class Admin:
             
         await self.sparcli.edit_server(server, icon=iconContent)
         await self.sparcli.say('Server icon has been updated.')
-
 
 
 def setup(bot):

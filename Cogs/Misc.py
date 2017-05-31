@@ -23,7 +23,7 @@ class Misc:
     @commands.command()
     async def invite(self):
         '''
-        Gives the bot's invite link.
+        Gives the bot's invite link
         '''
 
         # https://discordapi.com/permissions.html
@@ -36,7 +36,7 @@ class Misc:
     @commands.command()
     async def server(self):
         '''
-        Gives an invite link to the Sparcli server.
+        Gives an invite link to the Sparcli server
         '''
 
         await self.sparcli.say('https://discord.gg/esWFTgv')
@@ -44,7 +44,7 @@ class Misc:
     @commands.command()
     async def git(self):
         '''
-        Gives the link to the bot's GitHub page/code.
+        Gives the link to the bot's GitHub page/code
         '''
 
         await self.sparcli.say('https://github.com/4Kaylum/Spar.cli/')
@@ -52,7 +52,7 @@ class Misc:
     @commands.command()
     async def echo(self, *, content: str):
         '''
-        Echos some content back at you.
+        Echos some content back at you
         '''
 
         await self.sparcli.say(content)
@@ -60,7 +60,7 @@ class Misc:
     @commands.command(pass_context=True)
     async def echoin(self, ctx, channel:str, *, content: str):
         '''
-        Echos some content back into another channel.
+        Echos some content back into another channel
         '''
 
         # Is it a plain ID?
@@ -89,6 +89,9 @@ class Misc:
     @commands.command(pass_context=True)
     @permissionChecker(check='is_owner')
     async def echoserver(self, ctx, serverName:str, channelName:str, *, content:str):
+        '''
+        Echos some content back into another server
+        '''
 
         # It'll only be the owner sending this so there doesn't need to be any error handling.
         server = [i for i in self.sparcli.servers if i.name.lower() == serverName.lower()][0]
@@ -104,7 +107,7 @@ class Misc:
     @commands.command(pass_context=True)
     async def info(self, ctx, user:Member=None):
         '''
-        Gives info on the mentioned user.
+        Gives info on the mentioned user
         '''
 
         # Get the user who was pinged
@@ -139,7 +142,7 @@ class Misc:
     @commands.command(pass_context=True, aliases=['clear'])
     async def clean(self, ctx, amount: int=50, user: Member=None):
         '''
-        Checks a given amount of messages, and removes ones from a certain user.
+        Checks a given amount of messages, and removes ones from a certain user
         '''
 
         # Default to itself
@@ -156,7 +159,7 @@ class Misc:
     @commands.command(aliases=['color'])
     async def colour(self, colour:str):
         '''
-        Gives the colour of a hex code in an embed.
+        Gives the colour of a hex code in an embed
         '''
 
         # Fix up the hex code, if necessary
@@ -171,7 +174,7 @@ class Misc:
     @commands.command(pass_context=True, aliases=['mycolor'])
     async def mycolour(self, ctx):
         '''
-        Gives you the hex colour that your user is displayed as.
+        Gives you the hex colour that your user is displayed as
         '''
 
         user = ctx.message.author 
@@ -186,7 +189,7 @@ class Misc:
     @commands.command(pass_context=True, aliases=['colorof'])
     async def colourof(self, ctx, *, roleName:str=None):
         '''
-        Gives you the colour of a role.
+        Gives you the colour of a role
         '''
 
         # Get the role itself
@@ -206,7 +209,7 @@ class Misc:
     @botPermission(check='attach_files')
     async def meme(self, ctx, topText:str=None, bottomText:str=None, imageLink:str=None):
         '''
-        Creates a meme from a top and bottom text with a given image.
+        Creates a meme from a top and bottom text with a given image
         '''
 
         # Create some shorthand
@@ -297,7 +300,7 @@ class Misc:
     @commands.command(pass_context=True)
     async def vote(self, ctx, *, whatToVoteFor:str):
         '''
-        Lets you vote on an item.
+        Lets you vote on an item
         '''
 
         q = await self.sparcli.say('A vote has been started for subject `{}`.'.format(whatToVoteFor))

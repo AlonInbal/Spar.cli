@@ -32,7 +32,9 @@ class Steam:
         self.session.close()
 
     def gameFinder(self, gameName:str):
-        '''Returns a game ID as found from its name on the game list'''
+        '''
+        Returns a game ID as found from its name on the game list
+        '''
 
         for i in self.steamGames:
             if gameName.lower() in i['name'].lower():
@@ -42,7 +44,7 @@ class Steam:
     @commands.command(pass_context=True)
     async def steamsearch(self, ctx, *, gameName:str):
         '''
-        Gets the information of a game from Steam.
+        Gets the information of a game from Steam
         '''
 
         await self.sparcli.send_typing(ctx.message.channel)
@@ -67,7 +69,7 @@ class Steam:
     @commands.command(pass_context=True)
     async def steamid(self, ctx, *, gameURL:str):
         '''
-        Gets the information of a game from Steam URL.
+        Gets the information of a game from Steam URL
         '''
 
         await self.sparcli.send_typing(ctx.message.channel)
@@ -85,7 +87,7 @@ class Steam:
 
     async def getSteamGameInfo(self, gameID:str=None):
         '''
-        Gets the data of a game on Steam. Can only be done through ID.
+        Gets the data of a game on Steam. Can only be done through ID
         '''
 
         # TODO: REDO THIS AS `dict.get(item, default)` SO AS TO MAKE IT CLEANER

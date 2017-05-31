@@ -35,8 +35,9 @@ class Reddit:
 
     @commands.command(pass_context=True)
     async def reddituser(self, ctx, username:str):
-        '''Gives info on a given redditor
-        Usage :: reddituser <Username>'''
+        '''
+        Gives info on a given redditor
+        '''
 
         # Send typing to show that you're doing stuff
         await self.sparcli.send_typing(ctx.message.server)
@@ -75,8 +76,9 @@ class Reddit:
 
     @commands.command(pass_context=True)
     async def subreddit(self, ctx, name:str):
-        '''Gets a random post from a subreddit
-        Usage :: subreddit <Subreddit>'''
+        '''
+        Gets a random post from a subreddit
+        '''
 
         # Send typing to show that you're doing stuff
         await self.sparcli.send_typing(ctx.message.server)

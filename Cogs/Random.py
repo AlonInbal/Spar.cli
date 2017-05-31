@@ -9,8 +9,9 @@ class Random:
 
     @commands.command()
     async def coinflip(self):
-        '''Gives a random result of heads or tails
-        Usage :: coinflip'''
+        '''
+        Gives a random result of heads or tails
+        '''
 
         # Get the result
         coinResultTable = {0: 'Heads', 1: 'Tails'}

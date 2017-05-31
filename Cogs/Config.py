@@ -15,7 +15,7 @@ class Config:
     @permissionChecker(check='administrator')
     async def prefixCommand(self, ctx, *, prefix: str):
         '''
-        Changes the command prefix for the server.
+        Changes the command prefix for the server
         '''
 
         # Set up some variables to keep line length short
@@ -33,7 +33,7 @@ class Config:
     @permissionChecker(check='administrator')
     async def setup(self, ctx):
         '''
-        Gives you a reaction-based configuration dialogue.
+        Gives you a reaction-based configuration dialogue
         '''
 
         # Set up some variables to keep line length short

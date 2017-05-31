@@ -17,7 +17,7 @@ class RoleManagement:
     @botPermission(check='manage_roles')
     async def changecolour(self, ctx, roleColour: str, *, roleName: str):
         '''
-        Changes the colour of a specified role.
+        Changes the colour of a specified role
         '''
 
         # Get the role colour
@@ -36,7 +36,7 @@ class RoleManagement:
     @botPermission(check='manage_roles', compare=True)
     async def iam(self, ctx, *, roleName: str):
         '''
-        If allowed, the bot will give you a mentioned role.
+        If allowed, the bot will give you a mentioned role
         '''
 
         if roleName == 'list':
@@ -72,7 +72,7 @@ class RoleManagement:
 
     async def iamlist(self, ctx):
         '''
-        Gives a list of roles that you can self-assign.
+        Gives a list of roles that you can self-assign
         '''
 
         # Get all the stuff on the server that you can give to yourself
@@ -150,7 +150,7 @@ class RoleManagement:
     @botPermission(check='manage_roles')
     async def setcolour(self, ctx, colour:str, user:Member=None):
         '''
-        Creates a new role with a given colour, and assigns it to a user.
+        Creates a new role with a given colour, and assigns it to a user
         '''
 
         # Fix up some variables

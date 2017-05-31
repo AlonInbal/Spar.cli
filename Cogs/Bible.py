@@ -19,7 +19,7 @@ class Scriptures:
 
     async def getBiblePassage(self, passage):
         '''
-        Goes through the getbible api to get a list of applicable bible passages.
+        Goes through the getbible api to get a list of applicable Bible passages
         '''
 
         # Format the URL string
@@ -34,7 +34,7 @@ class Scriptures:
     @commands.command(pass_context=True, aliases=['christianity', 'bible'])
     async def christian(self, ctx, *, passage:str):
         '''
-        Gets a passage from the bible.
+        Gets a passage from the Bible
         '''
 
         # TODO: MAKE ALL THIS CLEANER TO WORK WITH

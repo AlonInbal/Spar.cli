@@ -17,7 +17,7 @@ class Animals:
     @commands.command(pass_context=True, aliases=['🐱'])
     async def cat(self, ctx):
         '''
-        Gives a random picture of a cat.
+        Gives a random picture of a cat
         '''
 
         # Send typing, so you can see it's being processed

@@ -55,7 +55,7 @@ class Internet:
     @commands.command(pass_context=True)
     async def pun(self, ctx):
         '''
-        Gives a random pun from the depths of the internet.
+        Gives a random pun from the depths of the internet
         '''
 
         # Read from page
@@ -77,7 +77,7 @@ class Internet:
     @commands.command(pass_context=True)
     async def wolfram(self, ctx, *, toDo: str):
         '''
-        Searches WolframAlpha for the given term. Returns text.
+        Searches WolframAlpha for the given term. Returns text
         '''
 
         # Call the internal search function
@@ -86,7 +86,7 @@ class Internet:
     @commands.command(pass_context=True)
     async def iwolfram(self, ctx, *, toDo: str):
         '''
-        Searches WolframAlpha for the given term. Returns images.
+        Searches WolframAlpha for the given term. Returns images
         '''
 
         # Call the internal search function
@@ -94,7 +94,7 @@ class Internet:
 
     async def wolframSearch(self, ctx, whatToSearch, displayImages):
         '''
-        Sends the actual search term to the Wolfram servers.
+        Sends the actual search term to the Wolfram servers
         '''
 
         # See if the Wolfram API has been loaded
@@ -129,7 +129,7 @@ class Internet:
     @commands.command(pass_context=True)
     async def throw(self, ctx, *, member: Member=None):
         '''
-        Throws a random thing at a user.
+        Throws a random thing at a user
         '''
 
         # Populate list if necessary
@@ -157,7 +157,7 @@ class Internet:
     @commands.command(pass_context=True)
     async def urban(self, ctx, *, searchTerm:str):
         '''
-        Allows you to search UrbanDictionary for a specific term.
+        Allows you to search UrbanDictionary for a specific term
         '''
 
         CHARACTER_LIMIT = 250

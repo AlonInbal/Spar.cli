@@ -15,7 +15,7 @@ class MemberManagement:
 
     async def sendChannelEnable(self, member, eventType):
         '''
-        Sends a message to a specified channel if it is enabled in the server settings.
+        Sends a message to a specified channel if it is enabled in the server settings
         '''
 
         # Get the server settings
