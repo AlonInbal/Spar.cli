@@ -26,11 +26,6 @@ class Internet:
         self.wolfClient = None
         self.nounlist = []
 
-        self.subredditCache = {}
-
-        self.dogCache = None
-        self.dogCacheTimeout = 10
-
         # Set up Wolfram
         if wolframalphaImported == True:
             try:
@@ -408,6 +403,28 @@ class Internet:
 
         e = makeEmbed(author='Definition of {}'.format(wordToDefine), fields=o, inline=False)
         await self.sparcli.say(embed=e)
+
+    @commands.command(pass_context=True)
+    async def autocomplete(self, ctx, *, searchTerm:str):
+        '''
+        Gives you some autocomplete terms for a given query
+        '''
+
+        base = 'https://suggestqueries.google.com/complete/search?output=toolbar&hl=en&q={}&client=chrome'
+        url = base.format(searchTerm).replace(' ', '%20')
+        async with self.session.get(url) as r:
+            print(await r.text())
+            data = await r.json()
+
+        # Make sure that results actually exist
+        if not data[1]:
+            await self.sparcli.say('There were no results for the query `{}`.'.format(searchTerm))
+            return
+
+        formatData = [i for i in data[1] if True not in ['http://' in i, 'https://' in i]][:5]
+        await self.sparcli.say(
+            '```\n* {}```'.format('\n* '.join(formatData))
+        )
 
 
 def setup(bot):
