@@ -41,7 +41,7 @@ class Animals:
         em = makeEmbed(image=page, colour=randint(0, 0xFFFFFF))
         await self.sparcli.say(embed=em)
 
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, aliases=['dog', 'puppy'])
     async def doggo(self, ctx):
         '''
         Gives a random picture of a doggo
