@@ -33,6 +33,10 @@ class Reddit:
         self.getSubreddit = lambda name: self.reddit.subreddit(name)
         self.redditIcon = 'http://rawapk.com/wp-content/uploads/2016/04/Reddit-The-Official-App-Icon.png'
 
+    async def on_command(self, command, ctx):
+        if command.cog_name == 'Reddit':
+            await self.sparcli.send_typing(ctx.message.channel)
+
     @commands.command(pass_context=True)
     async def reddituser(self, ctx, username:str):
         '''
