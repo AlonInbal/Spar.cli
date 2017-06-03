@@ -295,7 +295,7 @@ class Misc:
         o['Administrator'] = w[p.administrator]
 
         e = makeEmbed(fields=o)
-        await self.sparcli.say('', embed=e)
+        await self.sparcli.say(embed=e)
 
     @commands.command(pass_context=True)
     async def vote(self, ctx, *, whatToVoteFor:str):
@@ -306,6 +306,35 @@ class Misc:
         q = await self.sparcli.say('A vote has been started for subject `{}`.'.format(whatToVoteFor))
         await self.sparcli.add_reaction(q, '👍')
         await self.sparcli.add_reaction(q, '👎')
+
+    @commands.command(pass_context=True)
+    async def bigemoji(self, ctx, emoji:str):
+        '''
+        Gives you a larger picture of an emoji
+        '''
+
+        # Set up the base URLs
+        twitterBase = 'https://raw.githubusercontent.com/twitter/twemoji/gh-pages/72x72/{}.png'
+        discordBase = 'https://cdn.discordapp.com/emojis/{}.png'
+
+        # Format the actual emojis into realio things
+        if len(emoji) <= 2:
+            t = ord(emoji[0])
+            t = hex(t)
+            t = t[2:]
+            emojiUrl = twitterBase.format(t)
+        else:
+            t = emoji.split(':')[2][:-1]
+            emojiUrl = discordBase.format(t)
+        try:
+            emojiUrl
+        except Exception:
+            await self.sparcli.say('I was unable to get the URL for that emoji.')
+            return
+
+        # Echo it back out to the user
+        e = makeEmbed(image=emojiUrl)
+        await self.sparcli.say(embed=e)
 
 
 def setup(bot):
