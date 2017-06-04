@@ -18,6 +18,10 @@
 		"ID": "",
 		"Key": ""
 	},
+	"BingAPI": {
+		"Market": "en-US",
+		"Key": ""
+	},
 	"OwnerIDs": [],
 	"BotID": ""
 }

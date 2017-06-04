@@ -4,6 +4,7 @@ from random import choice
 from collections import OrderedDict
 from xml.etree import ElementTree as ET
 from requests.auth import HTTPBasicAuth
+from urllib.parse import quote
 from discord import Member
 from discord.ext import commands
 from Cogs.Utils.Configs import getTokens
@@ -46,6 +47,44 @@ class Internet:
     async def on_command(self, command, ctx):
         if command.cog_name == 'Internet':
             await self.sparcli.send_typing(ctx.message.channel)
+
+    async def on_message(self, message):
+        '''
+        Implement "okay google"
+        '''
+
+        if message.author.bot: return
+
+        checks = [
+            message.content.lower().startswith('okay google'),
+            message.content.lower().startswith('ok google')
+        ]
+
+        if True not in checks:
+            return
+
+        messageCheck = message.content.split(' ', 2)[2]
+        if messageCheck == False:
+            return
+
+        await self.sparcli.send_typing(message.channel)
+
+        base = 'https://api.cognitive.microsoft.com/bing/v5.0/search?q={}'
+        url = base.format(quote(messageCheck, safe=''))
+        tokens = getTokens()['BingAPI']
+        headers = {'BingAPIs-Market': tokens['Market'], 'Ocp-Apim-Subscription-Key': tokens['Key']}
+        async with self.session.get(url, headers=headers) as r:
+            data = await r.json()
+
+        results = data['webPages']['value']
+        resultList = [(i['name'], i['displayUrl'], i['snippet']) for i in results][:3]
+        o = OrderedDict()
+        for i in resultList:
+            o[i[0]] = '[Link]({})\n{}'.format(i[1], i[2])
+
+        e = makeEmbed(fields=o)
+        await self.sparcli.send_message(message.channel, embed=e)
+
 
     @commands.command(pass_context=True)
     async def pun(self, ctx):
