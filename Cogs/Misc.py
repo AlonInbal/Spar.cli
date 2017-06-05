@@ -1,9 +1,10 @@
-from os import remove
+from os import remove, getpid
 from datetime import datetime
 from collections import OrderedDict
 from asyncio import sleep
 from random import randint
 from aiohttp import ClientSession
+from psutil import Process
 from discord import Embed, Member, Emoji, Object
 from discord.ext import commands
 from Cogs.Utils.Messages import makeEmbed, getTextRoles
@@ -18,7 +19,35 @@ class Misc:
         self.session = ClientSession(loop=sparcli.loop)
 
     def __unload(self):
-        self.session.close() 
+        self.session.close()
+
+    @commands.command(pass_context=True)
+    async def stats(self, ctx):
+        '''
+        Gives you the stats of the bot
+        '''
+
+        botServers = len(self.sparcli.servers)
+        botChannels = sum([len(i.channels) for i in self.sparcli.servers])
+        botUsers = sum([len(i.members) for i in self.sparcli.servers])
+        memoryUsage = round(
+            Process(
+                getpid()
+            ).memory_info().rss/(1024**2),
+            2
+        )
+
+        o = OrderedDict()
+        o['Servers'] = 'I am in `{}` servers with `{}` channels.'.format(
+            botServers,
+            botChannels
+        )
+        o['Users'] = 'I am serving `{}` users.'.format(
+            botUsers
+        )
+        o['Memory'] = '{} MB'.format(memoryUsage)
+        em = makeEmbed(fields=o)
+        await self.sparcli.say(embed=em)
 
     @commands.command()
     async def invite(self):
