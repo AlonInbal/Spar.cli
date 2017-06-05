@@ -12,7 +12,7 @@ class RoleManagement:
     def __init__(self, sparcli):
         self.sparcli = sparcli
 
-    @commands.command(pass_context=True, aliases=['changecolour', 'changecolor', 'changerolecolour', 'changerolecolor'])
+    @commands.command(pass_context=True, aliases=['changecolor', 'changerolecolour', 'changerolecolor'])
     @permissionChecker(check='manage_roles')
     @botPermission(check='manage_roles')
     async def changecolour(self, ctx, roleColour: str, *, roleName: str):
