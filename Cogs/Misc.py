@@ -30,6 +30,8 @@ class Misc:
         botServers = len(self.sparcli.servers)
         botChannels = sum([len(i.channels) for i in self.sparcli.servers])
         botUsers = sum([len(i.members) for i in self.sparcli.servers])
+        botCogs = len(self.sparcli.cogs)
+        botCommands = len(self.sparcli.commands)
         memoryUsage = round(
             Process(
                 getpid()
@@ -45,7 +47,13 @@ class Misc:
         o['Users'] = 'I am serving `{}` users.'.format(
             botUsers
         )
-        o['Memory'] = '{} MB'.format(memoryUsage)
+        o['Cogs'] = 'Running `{}` cogs.'.format(
+            botCogs
+        )
+        o['Commands'] = '`{}` active commands.'.format(
+            botCommands
+        )
+        o['Memory'] = 'Using {}MB of RAM.'.format(memoryUsage)
         em = makeEmbed(fields=o)
         await self.sparcli.say(embed=em)
 
