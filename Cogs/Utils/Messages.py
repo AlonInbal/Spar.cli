@@ -61,6 +61,14 @@ def makeEmbed(**kwargs):
         footer = kwargs.get('footer', Empty)
         footer_icon = kwargs.get('footer_icon', Empty)
 
+    # Filter the colour into a usable form
+    if type(colour).__name__ == 'Message':
+        colour = colour.author.colour.value
+    elif type(colour).__name__ == 'Server':
+        colour = colour.me.colour.value 
+    elif type(colour).__name__ == 'Member':
+        colour = colour.colour.value
+
     # Correct the icon and author with the member, if necessary
     if user != None:
         author = user.display_name if author == Empty else author
