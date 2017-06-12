@@ -53,6 +53,7 @@ class Internet:
         Implement "okay google"
         '''
 
+        # Make sure it doesn't respond to a bot
         if message.author.bot: return
 
         checks = [
@@ -60,30 +61,64 @@ class Internet:
             message.content.lower().startswith('ok google')
         ]
 
+        # Make sure it only responds to "okay google"
         if True not in checks:
             return
 
+        # Make sure the search wasn't *just* "okay google"
         messageCheck = message.content.split(' ', 2)[2]
         if messageCheck == False:
             return
 
+        # Send typing
         await self.sparcli.send_typing(message.channel)
 
+        # Create the URL
         base = 'https://api.cognitive.microsoft.com/bing/v5.0/search?q={}'
         url = base.format(quote(messageCheck, safe=''))
         tokens = getTokens()['BingAPI']
         headers = {'BingAPIs-Market': tokens['Market'], 'Ocp-Apim-Subscription-Key': tokens['Key']}
+
+        # Send the GET request
         async with self.session.get(url, headers=headers) as r:
             data = await r.json()
 
-        results = data['webPages']['value']
+        # Try and get the results
+        try:
+            results = data['webPages']['value']
+        except KeyError:
+            await self.sparcli.send_message(message.channel, 'I couldn\'t find any results for that query.')
+            return
+
+        # Get a tuple of results from the query
         resultList = [(i['name'], i['displayUrl'], i['snippet']) for i in results][:3]
         o = OrderedDict()
         for i in resultList:
             o[i[0]] = '[Link]({})\n{}'.format(i[1], i[2])
 
+        # Check if the results were changed at all
+        additionalInfo = ''
+        try:
+
+            # Say what the changes were
+            changeData = data['queryContext']
+            additionalInfo = 'Your query `{}` was changed to `{}`.'.format(
+                changeData['originalQuery'],
+                changeData['alteredQuery'])
+
+            # Say how to force no changes
+            try:
+                forceSearch = changeData['alterationOverrideQuery']
+                additionalInfo = additionalInfo + ' To force search, send `{}`.'.format(forceSearch)
+            except KeyError:
+                pass
+
+        except KeyError:
+            pass
+
+        # Boop it back to the user
         e = makeEmbed(fields=o)
-        await self.sparcli.send_message(message.channel, embed=e)
+        await self.sparcli.send_message(message.channel, additionalInfo, embed=e)
 
 
     @commands.command(pass_context=True)
