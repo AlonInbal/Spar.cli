@@ -244,7 +244,7 @@ class Misc:
 
     @commands.command(pass_context=True)
     @botPermission(check='attach_files')
-    async def meme(self, ctx, topText:str=None, bottomText:str=None, imageLink:str=None):
+    async def meme(self, ctx, topText:str, bottomText:str, imageLink:str):
         '''
         Creates a meme from a top and bottom text with a given image
         '''
@@ -372,6 +372,14 @@ class Misc:
         # Echo it back out to the user
         e = makeEmbed(image=emojiUrl)
         await self.sparcli.say(embed=e)
+
+    @commands.command(pass_context=True)
+    async def patreon(self, ctx):
+        '''
+        Gives you the link to my Patreon page :3
+        '''
+
+        await self.sparcli.say('<https://www.patreon.com/CallumBartlett/>')
 
 
 def setup(bot):
