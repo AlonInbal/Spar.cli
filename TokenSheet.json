@@ -23,5 +23,6 @@
 		"Key": ""
 	},
 	"OwnerIDs": [],
-	"BotID": ""
+	"BotID": "",
+	"BotLoggingChannel": ""
 }
