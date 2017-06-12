@@ -19,5 +19,6 @@ q = [
      'Cogs.Event_Starboard',
      'Cogs.Event_Errors',
      'Cogs.AutoModerator',
+     'Cogs.Event_Logging',
 ]
 
