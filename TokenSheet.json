@@ -22,6 +22,9 @@
 		"Market": "en-US",
 		"Key": ""
 	},
+	"DiscordBotsPw" : {
+		"Key": ""
+	},
 	"OwnerIDs": [],
 	"BotID": "",
 	"BotLoggingChannel": ""

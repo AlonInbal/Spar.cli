@@ -500,6 +500,48 @@ class Internet:
             '```\n* {}```'.format('\n* '.join(formatData))
         )
 
+    @commands.command(pass_context=True)
+    async def getbots(self, ctx, user:Member=None):
+        '''
+        Gets the bots off of "bots.discord.pw" for a user
+        '''
+
+        if user == None: user = ctx.message.author
+
+        # Get the required token
+        token = getTokens()['DiscordBotsPw']
+
+        # Set up the URL
+        headers = {'Authorization': token['Key']}
+        base = 'https://bots.discord.pw/api/users/{}/'
+        url = base.format(user.id)
+        async with self.session.get(url, headers=headers) as r:
+            data = await r.json()
+
+        # Set up the response
+        q = '**Bot Name:** {}\n' \
+            '**Bot Description:** {}\n' \
+            '**Bot Prefix:** {}\n' \
+            '**Bot Library:** {}\n' \
+            '**Invite Link:** [Bwap]({})'
+        o = OrderedDict()
+        try:
+            bots = data['bots']
+        except KeyError:
+            await self.sparcli.say('This user has no registered bots.')
+            return            
+        bots = sorted(bots, key=lambda i: i['name'])
+        for i in bots:
+            o[i['name']] = q.format(
+                i['name'],
+                i['description'],
+                i['prefix'],
+                i['library'],
+                i['invite_url']
+            )
+        em = makeEmbed(fields=o)
+        await self.sparcli.say(embed=em)
+
 
 def setup(bot):
     bot.add_cog(Internet(bot))
