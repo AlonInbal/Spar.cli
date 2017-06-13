@@ -32,7 +32,7 @@ class ErrorManagement:
             # This is to be run if the command is sent in PM
             toSay = 'This command does not work in PMs.'
 
-        elif isinstance(error, needsToken):
+        elif isinstance(error, ThisNeedsAToken):
             # The token was not provided for the command
             toSay = 'The bot owner has not set up the token for this command properly.'
             
