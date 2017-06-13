@@ -10,6 +10,7 @@ from discord.ext import commands
 from Cogs.Utils.Configs import getTokens
 from Cogs.Utils.Messages import makeEmbed
 from Cogs.Utils.Misc import htmlFixer
+from Cogs.Utils.Permissions import needsToken
 
 # Import WolframAlpha
 try:
@@ -144,6 +145,7 @@ class Internet:
         await self.sparcli.say(fullPun)
 
     @commands.command(pass_context=True)
+    @needsToken(token='WolframAlpha')
     async def wolfram(self, ctx, *, toDo: str):
         '''
         Searches WolframAlpha for the given term. Returns text
@@ -153,6 +155,7 @@ class Internet:
         await self.wolframSearch(ctx, toDo, False)
 
     @commands.command(pass_context=True)
+    @needsToken(token='WolframAlpha')
     async def iwolfram(self, ctx, *, toDo: str):
         '''
         Searches WolframAlpha for the given term. Returns images
@@ -165,18 +168,6 @@ class Internet:
         '''
         Sends the actual search term to the Wolfram servers
         '''
-
-        # See if the Wolfram API has been loaded
-        if self.wolfClient == None:
-            try:
-                if wolframalphaImported == False:
-                    raise KeyError
-                tokens = getTokens()
-                secret = tokens['WolframAlpha']['Secret']
-                self.wolfClient = Client(secret)
-            except KeyError:
-                await self.sparcli.say('WolframAlpha has not been set up for this bot.')
-                return
 
         # Sends query to Wolfram
         wolfResults = self.wolfClient.query(whatToSearch)
@@ -376,6 +367,7 @@ class Internet:
         await self.sparcli.say(embed=e)
 
     @commands.command(pass_context=True)
+    @needsToken(token='MyAnimeList')
     async def anime(self, ctx, *, animeName:str):
         '''
         Gives you the details of an anime
@@ -384,9 +376,6 @@ class Internet:
         # Make sure there are the correct tokens in the bot
         tokens = getTokens()
         userPass = tokens['MyAnimeList']
-        if '' in userPass.values():
-            await self.sparcli.say('The command has not been set up to work on this bot.')
-            return
 
         # Authenticate
         auth = BasicAuth(userPass['Username'], userPass['Password'])
@@ -431,6 +420,7 @@ class Internet:
         await self.sparcli.say(embed=e)
 
     @commands.command(pass_context=True, aliases=['df'])
+    @needsToken(token='OxfordDictionary')
     async def define(self, ctx, *, wordToDefine:str):
         '''
         Defines a word using the Oxford Dictionary
@@ -441,9 +431,6 @@ class Internet:
         # Make sure there are the correct tokens in the bot
         tokens = getTokens()
         userPass = tokens['OxfordDictionary']
-        if '' in userPass.values():
-            await self.sparcli.say('The command has not been set up to work on this bot.')
-            return
 
         # Send a request to the server
         base = 'https://od-api.oxforddictionaries.com/api/v1/entries/en/{}/definitions'
@@ -501,6 +488,7 @@ class Internet:
         )
 
     @commands.command(pass_context=True)
+    @needsToken(token='DiscordBotsPw')
     async def getbots(self, ctx, user:Member=None):
         '''
         Gets the bots off of "bots.discord.pw" for a user

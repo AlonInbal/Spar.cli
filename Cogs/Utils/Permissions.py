@@ -12,12 +12,13 @@ def needsToken(**kwargs):
     '''
 
     def predicate(ctx):
-        token = kwargs.get('token', None)
+        token = kwargs.get('token')
+        v = getTokens()[token]
 
-        if getTokens()[token]['Secret'] == '':
-            raise ThisNeedsAToken
-        return True
-        
+        for i, o in v.items():
+            if not o:
+                raise ThisNeedsAToken
+        return True        
     return commands.check(predicate)
 
 

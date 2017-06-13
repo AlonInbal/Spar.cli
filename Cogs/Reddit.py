@@ -7,6 +7,7 @@ except ImportError:
 from discord.ext import commands 
 from Cogs.Utils.Messages import makeEmbed
 from Cogs.Utils.Configs import getTokens, getRedditInstances, saveRedditInstances
+from Cogs.Utils.Permissions import needsToken
 
 
 '''
@@ -23,6 +24,8 @@ class Reddit:
         self.sparcli = sparcli
 
         tokens = getTokens()['Reddit']
+
+        # If the tokens are not set up properly, this command will fail right here
         self.reddit = praw.Reddit(
             client_id=tokens['ID'],
             client_secret=tokens['Secret'],
@@ -38,6 +41,7 @@ class Reddit:
             await self.sparcli.send_typing(ctx.message.channel)
 
     @commands.command(pass_context=True)
+    @needsToken(token='Reddit')
     async def reddituser(self, ctx, username:str):
         '''
         Gives info on a given redditor
@@ -79,6 +83,7 @@ class Reddit:
         await self.sparcli.say('', embed=e)
 
     @commands.command(pass_context=True)
+    @needsToken(token='Reddit')
     async def subreddit(self, ctx, name:str):
         '''
         Gets a random post from a subreddit

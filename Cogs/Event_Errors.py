@@ -31,6 +31,10 @@ class ErrorManagement:
         elif isinstance(error, DoesntWorkInPrivate):
             # This is to be run if the command is sent in PM
             toSay = 'This command does not work in PMs.'
+
+        elif isinstance(error, needsToken):
+            # The token was not provided for the command
+            toSay = 'The bot owner has not set up the token for this command properly.'
             
         elif isinstance(error, commands.errors.CheckFailure):
             # This should never really occur
