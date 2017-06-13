@@ -187,34 +187,6 @@ class Internet:
         await self.sparcli.say(' '.join(wolfList[0:6]))
 
     @commands.command(pass_context=True)
-    async def throw(self, ctx, *, member: Member=None):
-        '''
-        Throws a random thing at a user
-        '''
-
-        # Populate list if necessary
-        if not self.nounlist:
-            nounSite = 'http://178.62.68.157/raw/nouns.txt'
-            async with self.session.get(nounSite) as r:
-                nounstr = await r.text()
-            self.nounlist = nounstr.split('\n')
-
-        # Get thrown object
-        toThrow = choice(self.nounlist)
-        aOrAn = 'an' if toThrow[0] in 'aeiou' else 'a'
-
-        # See if the user is the bot
-        if member == None:
-            pass
-        elif member.id == self.sparcli.user.id:
-            await self.sparcli.say('Nice try.')
-            return
-
-        # Throw the object
-        atUser = '.' if member == None else ' at {}.'.format(member.mention)
-        await self.sparcli.say('Thrown {} {}{}'.format(aOrAn, toThrow, atUser))
-
-    @commands.command(pass_context=True)
     async def urban(self, ctx, *, searchTerm:str):
         '''
         Allows you to search UrbanDictionary for a specific term
