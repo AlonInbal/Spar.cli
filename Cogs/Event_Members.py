@@ -10,6 +10,19 @@ class MemberManagement:
     async def on_member_join(self, member):
         await self.sendChannelEnable(member, 'Joins')
 
+        # Get the role ID
+        serverSettings = getServerJson(member.server.id)
+        if serverSettings['OnJoin'] and member.bot == False:
+            role = serverSettings['OnJoin']
+        elif serverSettings['OnBotJoin'] and member.bot == True:
+            role = serverSettings['OnBotJoin']
+        else:
+            return
+
+        # Get the role object
+        roleObj = [i for i in member.server.roles if i.id == role][0]
+        await self.sparcli.add_role(member, roleObj)
+
     async def on_member_remove(self, member):
         await self.sendChannelEnable(member, 'Leaves')
 

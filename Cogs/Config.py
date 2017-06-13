@@ -65,6 +65,36 @@ class Config:
         # Save it all to file
         saveServerJson(serverID, serverSettings)
 
+    @commands.command(pass_context=True)
+    @permissionChecker(check='manage_roles')
+    async def joinrole(self, ctx, *, roleName:str):
+        '''
+        Sets a role to be given to a user when they join
+        '''
+
+        roleObject = await getTextRoles(ctx, roleName, speak=True, sparcli=self.sparcli)
+        if type(roleObject) == int: return 
+
+        serverSettings = getServerJson(ctx.message.server.id)
+        serverSettings['OnJoin'] = roleObject.id
+        saveServerJson(ctx.message.server.id, serverSettings)
+        await self.sparcli.say('Done!')
+
+    @commands.command(pass_context=True)
+    @permissionChecker(check='manage_roles')
+    async def botjoinrole(self, ctx, *, roleName:str):
+        '''
+        Sets a role to be given to a user when they join
+        '''
+
+        roleObject = await getTextRoles(ctx, roleName, speak=True, sparcli=self.sparcli)
+        if type(roleObject) == int: return 
+
+        serverSettings = getServerJson(ctx.message.server.id)
+        serverSettings['OnBotJoin'] = roleObject.id
+        saveServerJson(ctx.message.server.id, serverSettings)
+        await self.sparcli.say('Done!')
+
 
 def setup(bot):
     bot.add_cog(Config(bot))

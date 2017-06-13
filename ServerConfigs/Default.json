@@ -29,5 +29,7 @@
     ],
     "CommandPrefix": ";",
     "ForcedNicknames": {
-    }
+    },
+    "OnJoin": "",
+    "OnBotJoin": ""
 }
