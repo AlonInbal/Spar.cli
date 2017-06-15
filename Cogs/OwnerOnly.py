@@ -103,7 +103,7 @@ class OwnerOnly:
 
         # Decides whether to be a smartbot
         if doFully:
-            extention = 'Cogs.' + extention 
+            extention = 'Cogs.' + toLoad 
 
         else:
             loadedCogs = list(self.sparcli.cogs.keys())
@@ -148,7 +148,7 @@ class OwnerOnly:
 
         # Decides whether to be a smartbot
         if doFully:
-            extention = 'Cogs.' + extention 
+            extention = 'Cogs.' + toLoad 
 
         else:
             loadedCogs = list(self.sparcli.cogs.keys())
