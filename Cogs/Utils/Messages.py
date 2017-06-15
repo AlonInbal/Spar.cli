@@ -1,3 +1,4 @@
+from random import randint
 from time import strftime
 from re import finditer
 from discord import Embed
@@ -60,6 +61,12 @@ def makeEmbed(**kwargs):
         # Footer
         footer = kwargs.get('footer', Empty)
         footer_icon = kwargs.get('footer_icon', Empty)
+
+    if description == Empty:
+        if randint(0, 20) == 0:
+            description = 'Support me at https://patreon.com/CallumBartlett!'
+        else:
+            description = 'Use the `invite` command to add me to your own server!'
 
     # Filter the colour into a usable form
     if type(colour).__name__ == 'Message':
