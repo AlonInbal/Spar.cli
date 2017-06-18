@@ -65,6 +65,15 @@ class Animals:
 
         await self.randomSubredditImages(ctx, 'Steak', 'steak')
 
+    @commands.command(pass_context=True, aliases=['🐮'])
+    async def cow(self, ctx):
+        '''
+        Gives a random picture of cows
+        '''
+
+        await self.randomSubredditImages(ctx, 'Cow', 'cows')
+
+
     async def randomSubredditImages(self, ctx, animal, subreddit):
         await self.sparcli.send_typing(ctx.message.channel)
 
