@@ -3,7 +3,6 @@ from re import finditer
 from random import choice
 from collections import OrderedDict
 from xml.etree import ElementTree as ET
-from requests.auth import HTTPBasicAuth
 from urllib.parse import quote
 from discord import Member
 from discord.ext import commands
