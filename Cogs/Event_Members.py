@@ -21,7 +21,7 @@ class MemberManagement:
 
         # Get the role object
         roleObj = [i for i in member.server.roles if i.id == role][0]
-        await self.sparcli.add_role(member, roleObj)
+        await self.sparcli.add_roles(member, roleObj)
 
     async def on_member_remove(self, member):
         await self.sendChannelEnable(member, 'Leaves')
