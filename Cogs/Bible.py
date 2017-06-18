@@ -12,6 +12,7 @@ class Scriptures:
         self.sparcli = sparcli
         self.bible = 'https://getbible.net/json?scrip={}'
         self.biblePicture = 'http://pacificbible.com/wp/wp-content/uploads/2015/03/holy-bible.png'
+        self.quranPicture = 'http://www.siotw.org/modules/burnaquran/images/quran.gif'
         self.session = ClientSession(loop=sparcli.loop)
 
     def __unload(self):
@@ -29,6 +30,15 @@ class Scriptures:
         async with self.session.get(toRetrieveFrom) as r:
             text = await r.text()
         return loads(text[1:-2])
+
+    async def getQuranPassage(self, passage):
+        '''Goes through the alquran api to get quran passages'''
+        bible = 'http://api.alquran.cloud/ayah/{}/en.sahih'
+        toRetrieveFrom = bible.format(passage)
+        # data = get(toRetrieveFrom).content
+        async with self.session.get(toRetrieveFrom) as r:
+            data = await r.json()
+        return data
 
 
     @commands.command(pass_context=True, aliases=['christianity', 'bible'])
@@ -73,6 +83,50 @@ class Scriptures:
 
         # Make it into an embed
         em = makeEmbed(fields=passageReadings, author_icon=self.biblePicture, author=chapterName)
+
+        # Boop it to the user
+        await self.sparcli.say('', embed=em)
+
+    @commands.command(pass_context=True)
+    async def quran(self, ctx, *, passage: str):
+        '''
+        Gets a passage from the Quran
+        '''
+
+        await self.sparcli.send_typing(ctx.message.channel)
+
+        # Generate the string that'll be sent to the site
+        getString = passage
+
+        # Work out how many different quotes you need to get
+        tempPass = passage.split(':')[1]  # Gets the 34-35 from 14:34-35
+        if len(tempPass.split('-')) == 2:
+            passage = int(tempPass.split('-')[0])
+            lastpassage = int(tempPass.split('-')[1])
+        else:
+            passage = lastpassage = int(tempPass)
+
+        # Actually go get all the data from the site
+        bibleData = await self.getQuranPassage(getString)
+
+        # Get the nice passages and stuff
+        passageReadings = OrderedDict()
+        chapterName = bibleData['data']['surah']['englishName']
+        chapterPassages = bibleData['data']
+        chapterNumber = bibleData['data']['surah']['number']
+        for i in range(passage, lastpassage + 1):
+            getThisTurn = '{}:{}'.format(chapterNumber, i)
+            bibleData = await self.getQuranPassage(getThisTurn)
+            y = bibleData['data']['text']
+            passageReadings[getThisTurn] = y
+
+        # Make it into an embed
+        em = makeEmbed(
+            fields=passageReadings,
+           author_icon=self.quranPicture, 
+           author=chapterName, 
+           colour=0x258D58
+        )
 
         # Boop it to the user
         await self.sparcli.say('', embed=em)
