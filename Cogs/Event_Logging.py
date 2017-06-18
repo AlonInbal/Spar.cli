@@ -25,12 +25,12 @@ class BotLogger(object):
         if not self.discordBotsToken: return
 
         data = {
-            'server_count'
+            'server_count': serverAmount
         }
         headers = {
             'Authorization': self.discordBotsToken
         }
-        async with self.session.post(
+        v = await self.session.post(
             'https://bots.discord.pw/api/bots/{}/stats'.format(self.sparcli.user.id),
             data=data,
             headers=headers
@@ -42,7 +42,7 @@ class BotLogger(object):
         '''
 
         botServers = len(self.sparcli.servers)
-        await self.updateDiscordBots(botServers)
+        # await self.updateDiscordBots(botServers)
 
         allMembers = server.members 
         userMembers = len([i for i in allMembers if not i.bot])
@@ -69,7 +69,7 @@ class BotLogger(object):
         '''
 
         botServers = len(self.sparcli.servers)
-        await self.updateDiscordBots(botServers)
+        # await self.updateDiscordBots(botServers)
 
         allMembers = server.members 
         userMembers = len([i for i in allMembers if not i.bot])
