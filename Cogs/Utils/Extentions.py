@@ -20,5 +20,6 @@ q = [
      'Cogs.Event_Errors',
      'Cogs.AutoModerator',
      'Cogs.Event_Logging',
+     'Cogs.RobotEvents',
 ]
 
