@@ -63,9 +63,10 @@ def makeEmbed(**kwargs):
         footer_icon = kwargs.get('footer_icon', Empty)
 
     if description == Empty:
-        if randint(0, 20) == 0:
-            description = 'Support me at https://patreon.com/CallumBartlett!'
-        else:
+        v = randint(0, 20)
+        if v == 0:
+            description = 'Support me at https://patreon.com/CallumBartlett c:'
+        elif v == 1:
             description = 'Use the `invite` command to add me to your own server!'
 
     # Filter the colour into a usable form
