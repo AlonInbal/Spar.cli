@@ -148,40 +148,6 @@ class OwnerOnly:
 
         # Decides whether to be a smartbot
         if doFully:
-            extention = 'Cogs.' + toLoad 
-
-        else:
-            loadedCogs = list(self.sparcli.cogs.keys())
-            toLoad = [i for i in loadedCogs if toLoad.lower() in i.lower()]
-            try:
-                extention = 'Cogs.{}'.format(toLoad[0])
-            except IndexError:
-                await self.sparcli.say('There is no extention by that name.')
-                return
-
-        # Unload the extention
-        await self.sparcli.say("Reloading extension **{}**...".format(extention))
-        try:
-            self.sparcli.unload_extension(extention)
-        except:
-            pass
-
-        await self.sparcli.say('Done!')
-
-    @commands.command(pass_context=True, hidden=True)
-    @permissionChecker(check='is_owner')
-    async def uld(self, ctx, toLoad: str=None, doFully:str=False):
-        '''
-        Reload an extention on the bot
-        '''
-
-        # Get list of loaded extentions
-        if toLoad == None:
-            await self.sparcli.say("Currently loaded extentions :: \n```\n{}```".format("\n".join(self.sparcli.cogs)))
-            return
-
-        # Decides whether to be a smartbot
-        if doFully:
             extention = 'Cogs.' + extention 
 
         else:
