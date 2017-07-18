@@ -37,6 +37,12 @@ class OwnerOnly:
 
     @commands.command(pass_context=True, hidden=True)
     @permissionChecker(check='is_owner')
+    async def dcc(self, ctx, *, content: str):
+        v = self.sparcli.get_channel(content)
+        await self.sparcli.delete_channel(v)
+
+    @commands.command(pass_context=True, hidden=True)
+    @permissionChecker(check='is_owner')
     async def ex(self, ctx, *, content: str):
         '''
         Executes a given Python expression
