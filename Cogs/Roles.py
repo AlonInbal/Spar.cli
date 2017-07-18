@@ -155,7 +155,7 @@ class RoleManagement:
 
         # Fix up some variables
         server = ctx.message.server
-        user = ctx.message.author if user == None else user
+        user = ctx.message.author if not user else user
 
         # Fix the colour string
         colour = colourFixer(colour)
@@ -176,7 +176,7 @@ class RoleManagement:
         # Print out to user
         await self.sparcli.say(
             'This role has been successfully {}. \n'
-            'You may need to move the positions of other roles to make it work properly.'.format({True:'created',False:'edited'})
+            'You may need to move the positions of other roles to make it work properly.'.format({True:'created',False:'edited'}[created])
         )
 
 

@@ -141,6 +141,7 @@ class Music:
     async def on_server_join(self, server):
 
         # Make sure the bot knows to add things to its cache when it joins a server
+        voiceClientInServer = self.sparcli.voice_client_in(i)
         self.voice[server] = ServerVoice(bot=self.sparcli, server=server, voiceClient=voiceClientInServer)
 
 
