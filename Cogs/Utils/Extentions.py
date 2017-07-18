@@ -13,7 +13,6 @@ q = [
      'Cogs.Music',
      # 'Cogs.LEGO',
      'Cogs.Animals',
-     'Cogs.Levels',
      'Cogs.GameStats',
      'Cogs.Event_Members',
      'Cogs.Event_Starboard',
