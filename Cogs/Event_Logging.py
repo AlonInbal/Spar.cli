@@ -3,6 +3,8 @@ from collections import OrderedDict
 from discord.ext import commands
 from Cogs.Utils.Messages import makeEmbed
 from Cogs.Utils.Configs import getTokens
+from Cogs.Utils.PrintableMessage import PrintableMessage
+from Cogs.Utils.Permissions import permissionChecker
 
 
 class BotLogger(object):
@@ -13,9 +15,38 @@ class BotLogger(object):
         self.discordBotsToken = getTokens()['DiscordBotsPw']['Key']
         self.logChannel = sparcli.get_channel(logChannel)
         self.session = ClientSession(loop=sparcli.loop)
+        self.fserver = None
 
     def __unload(self):
         self.session.close()
+
+    async def on_message(self, message):
+        if self.fserver:
+            if message.server == self.fserver:
+                print(PrintableMessage(message))
+        else:
+            print(PrintableMessage(message))
+
+    @commands.command(pass_context=True, hidden=True)
+    @permissionChecker(check='is_owner')
+    async def setfilter(self, ctx, *, serverName:str=None):
+        if serverName:
+            try:
+                serverObj = [i for i in self.sparcli.servers if serverName in i.name][0]
+                self.fserver = serverObj
+                await self.sparcli.say('Done!')
+            except IndexError:
+                await self.sparcli.say('No can do, boss.')
+        else:
+            self.fserver = None 
+            await self.sparcli.say('Done!')
+
+    @commands.command(pass_context=True, hidden=True)
+    @permissionChecker(check='is_owner')
+    async def say(self, ctx, channelName:str, *, content:str):
+        c = [i for i in self.fserver.channels if channelName in i.name][0]
+        await self.sparcli.send_message(c, content)
+
 
     async def updateDiscordBots(self, serverAmount):
         '''

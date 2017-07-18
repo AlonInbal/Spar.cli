@@ -44,7 +44,7 @@ class PrintableMessage(object):
         guildID = self.guild.id[:PrintableMessage.MAX_GUILD_ID] if self.guild else 'None'
         if len(guildID) < PrintableMessage.MAX_GUILD_ID:
             guildID = ' ' * (PrintableMessage.MAX_GUILD_ID - len(guildID)) + guildID 
-        workingOutput.append(guildID)
+        # workingOutput.append(guildID)
 
         # Plonk on the guild name
         channelName = self.channel.name[:PrintableMessage.MAX_CHANNEL_NAME] if self.guild else 'None'
@@ -56,7 +56,7 @@ class PrintableMessage(object):
         channelID = self.channel.id[:PrintableMessage.MAX_CHANNEL_ID] if self.guild else 'None'
         if len(channelID) < PrintableMessage.MAX_CHANNEL_ID:
             channelID = ' ' * (PrintableMessage.MAX_CHANNEL_ID - len(channelID)) + channelID 
-        workingOutput.append(channelID)
+        # workingOutput.append(channelID)
 
         # Plonk on the author name
         authorName = self.author.name[:PrintableMessage.MAX_AUTHOR_NAME]
@@ -68,7 +68,7 @@ class PrintableMessage(object):
         authorID = self.author.id[:PrintableMessage.MAX_AUTHOR_ID]
         if len(authorID) < PrintableMessage.MAX_AUTHOR_ID:
             authorID = ' ' * (PrintableMessage.MAX_AUTHOR_ID - len(authorID)) + authorID 
-        workingOutput.append(authorID)
+        # workingOutput.append(authorID)
 
         # Plonk on the message content
         messageContent = self.content[:PrintableMessage.MAX_MESSAGE_CONTENT]
@@ -76,11 +76,11 @@ class PrintableMessage(object):
             messageContent = ' ' * (PrintableMessage.MAX_MESSAGE_CONTENT - len(messageContent)) + messageContent 
         workingOutput.append(messageContent)
 
-        # Plonk on the message content
+        # Plonk on the message ID
         messageID = self.message.id[:PrintableMessage.MAX_MESSAGE_ID]
         if len(messageID) < PrintableMessage.MAX_MESSAGE_ID:
             messageID = ' ' * (PrintableMessage.MAX_MESSAGE_ID - len(messageID)) + messageID 
-        workingOutput.append(messageID)
+        # workingOutput.append(messageID)
 
         return workingOutput
 

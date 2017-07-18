@@ -5,7 +5,6 @@ from Cogs.Utils.Configs import *
 from Cogs.Utils.Updates import *
 from Cogs.Utils.Messages import makeEmbed
 from Cogs.Utils.Extentions import q as initialExtentions
-from Cogs.Utils.PrintableMessage import PrintableMessage
 
 
 def getCommandPrefix(bot, message):
@@ -64,8 +63,6 @@ async def on_message_edit(before, after):
 
 @sparcli.event
 async def on_message(message):
-    
-    print(PrintableMessage(message))
 
     # Make the bot not respond to other bots
     if message.author.bot:
