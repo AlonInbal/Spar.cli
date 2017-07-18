@@ -1,6 +1,27 @@
 from discord.ext import commands
-from .Configs import getTokens
+from .Configs import getTokens, getServerJson
 from .Exceptions import *
+
+
+def requiredEnabled(**kwargs):
+    '''Checks to see if a certain token type's secret exists
+
+    Parameters :: 
+        token : str
+            The type of token whose secret needs to exist
+    '''
+
+    def predicate(ctx):
+        token = kwargs.get('enable')
+        serverSettings = getServerJson(ctx.message.server.id)
+        enabled = serverSettings['Toggles'][token]
+        if enabled:
+            return True
+        else:
+            raise CommandDisabled
+            return False
+         
+    return commands.check(predicate)
 
 
 def needsToken(**kwargs):

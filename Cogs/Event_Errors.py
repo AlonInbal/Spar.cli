@@ -35,6 +35,10 @@ class ErrorManagement:
         elif isinstance(error, ThisNeedsAToken):
             # The token was not provided for the command
             toSay = 'The bot owner has not set up the token for this command properly.'
+
+        elif isinstance(error, CommandDisabled):
+            # The command is disabled in the configs
+            toSay = 'This command is disabled in the configuration for this server.'
             
         elif isinstance(error, commands.errors.CheckFailure):
             # This should never really occur

@@ -50,6 +50,7 @@ class Config:
 
         # Work on each type of toggle enable
         toggleTypes = serverSettings['Toggles'].keys()
+        toggleTypes = sorted(toggleTypes)
         channelTypes = defaultSettings['Channels'].keys()
 
         for i in toggleTypes:

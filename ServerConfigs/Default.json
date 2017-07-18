@@ -11,7 +11,8 @@
         "Bans": false,
         "Starboard": false,
         "Kicks": false,
-        "Deleteserverinvites": false
+        "Deleteserverinvites": false,
+        "Anyonesetcolour": false
     },
     "Channels": {
         "Bans": "",

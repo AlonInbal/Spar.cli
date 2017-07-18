@@ -10,6 +10,14 @@ class BotPermissionsTooLow(CE):
     pass
 
 
+class CommandDisabled(CE):
+    '''
+    Exception thrown when a particular toggle is disabled
+    '''
+    
+    pass
+
+
 class MemberPermissionsTooLow(CE):
     '''
     This will be thrown when a given member is trying to perform an action

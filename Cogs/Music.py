@@ -128,8 +128,12 @@ class Music:
 
         # Start the serverhandler looping
         try:
+
+            # Get the current serverHandler
             serverHandler = self.voice[message.server]
         except KeyError:
+
+            # It doesn't exist - make one
             i = message.server
             voiceClientInServer = self.sparcli.voice_client_in(i)
             self.voice[i] = ServerVoice(bot=self.sparcli, server=i, voiceClient=voiceClientInServer)
