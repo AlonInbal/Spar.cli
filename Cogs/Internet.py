@@ -1,6 +1,6 @@
 from aiohttp import ClientSession, BasicAuth
 from re import finditer
-from random import choice
+from random import choice, shuffle
 from collections import OrderedDict
 from xml.etree import ElementTree as ET
 from urllib.parse import quote
@@ -500,6 +500,34 @@ class Internet:
             )
         em = makeEmbed(fields=o)
         await self.sparcli.say(embed=em)
+
+    @commands.command(pass_context=True)
+    async def imagedump(self, ctx, fourChanThreadLink:str, imageFormat:str='jpg|png|gif'):
+        '''
+        Dumps a list of images from a 4chan thread
+        '''
+
+        async with self.session.get(fourChanThreadLink) as r:
+            data = await r.text()
+
+        data = data.replace('>', '>\n')
+        regexMatch = r'//.+\.(' + imageFormat + ')'
+        matches = finditer(regexMatch, data)
+        ret = []
+        for i in matches:
+            ret.append('https:' + i.group())
+
+        shuffle(ret)
+        retText = ''
+        retTextConfirmed = ''
+        for i in ret:
+            retText = retText + i + ' '
+            if len(retText) >= 1980:
+                break 
+            else:
+                retTextConfirmed = retText
+
+        await self.sparcli.say(retTextConfirmed)
 
 
 def setup(bot):
