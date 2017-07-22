@@ -53,6 +53,8 @@ class Internet:
         Implement "okay google"
         '''
 
+        return
+
         # Make sure it doesn't respond to a bot
         if message.author.bot: return
 
