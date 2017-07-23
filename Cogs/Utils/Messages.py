@@ -5,16 +5,19 @@ from discord import Embed
 from discord.ext import commands
 
 
-async def getTextRoles(ctx, hitString, speak=False, sparcli=None):
-    '''Gets non-tagged and tagged roles from a message's ctx'''
+async def getTextRoles(ctx, hitString, speak=False):
+    '''
+    Gets non-tagged and tagged roles from a message's ctx
+    '''
 
-    serverRoles = ctx.message.server.roles 
-    hits = [i for i in serverRoles if hitString.lower() in i.name.lower()]
+    # Go through the guild roles
+    guildRoles = ctx.guild.roles 
+    hits = [i for i in guildRoles if hitString.lower() in i.name.lower()]
     if len(hits) == 1:
         return hits[0]
 
     if speak:
-        await sparcli.send_message(ctx.message.channel, 'There were `{}` hits for that string within this server\'s roles.'.format(len(hits)))
+        await ctx.send('There were `{}` hits for that string within this guild\'s roles.'.format(len(hits)))
     return len(hits)
 
 
@@ -68,6 +71,8 @@ def makeEmbed(**kwargs):
             description = 'Support me at https://patreon.com/CallumBartlett c:'
         elif v == 1:
             description = 'Use the `invite` command to add me to your own server!'
+    elif description == None:
+        description = Empty
 
     # Filter the colour into a usable form
     if type(colour).__name__ == 'Message':
@@ -80,35 +85,43 @@ def makeEmbed(**kwargs):
     # Correct the icon and author with the member, if necessary
     if user != None:
         author = user.display_name if author == Empty else author
-        author_icon = user.avatar_url if author_icon == Empty else author_icon
+        author_icon = user.avatar_url
         try:
-            colour = user.colour.value 
+            colour = user.colour.value if colour == 0 else colour
         except AttributeError:
             pass
 
     # Create an embed object with the specified colour
-    embedObj = Embed(colour=colour)
+    embedObject = Embed(colour=colour)
 
     # Set the normal attributes
     if author != Empty:
-        embedObj.set_author(name=author, url=author_url, icon_url=author_icon)
-    embedObj.set_footer(text=footer, icon_url=footer_icon)
-    embedObj.description = description
+        embedObject.set_author(name=author, url=author_url, icon_url=author_icon)
+    embedObject.set_footer(text=footer, icon_url=footer_icon)
+    embedObject.description = description
     
     # Set the attributes that have no default
-    if image: embedObj.set_image(url=image)
-    if thumbnail: embedObj.set_thumbnail(url=thumbnail)
+    if image: 
+        embedObject.set_image(url=image)
+    if thumbnail: 
+        embedObject.set_thumbnail(url=thumbnail)
 
     # Set the fields
     for i, o in fields.items():
+
+        # Default inline
         p = inline
+
+        # Check for custom inline
         if type(o) in [tuple, list]:
             p = o[1]
             o = o[0]
-        embedObj.add_field(name=i, value=o, inline=p)
+
+        # Add field
+        embedObject.add_field(name=i, value=o, inline=p)
 
     # Return to user
-    return embedObj
+    return embedObject
 
 
 def messageToEmbed(message):
@@ -121,13 +134,13 @@ def messageToEmbed(message):
     # Check to see if any images were added
     regexMatch = r'.+(.png)|.+(.jpg)|.+(.jpeg)|.+(.gif)'
     if len(message.attachments) > 0:
-        attachment = message.attachments[0]
+        attachment = message.attachments[0]  # We can only get one attachment sorry ♥
         matchList = [i for i in finditer(regexMatch, attachment['filename'])]
         if len(matchList) > 0:
             image = attachment['url']
 
     # Get the time the message was created
-    createdTime = '.'.join(str(message.timestamp).split('.')[:-1])
+    createdTime = '.'.join(str(message.created_at).split('.')[:-1])
 
     # Make and return the embed
     return makeEmbed(user=author, description=description, image=image, footer=createdTime)
