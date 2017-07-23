@@ -6,7 +6,7 @@ COGS:
     Animals
     AutoModerator
     Bible
-    Config
+    Config (updateFromEmoji, updateFromMessage)
     Event_Errors
     Event_Logging
     Event_Members
@@ -24,9 +24,9 @@ COGS:
 
 UTILS:
 #   Configs
-    Exceptions
-    Extentions
-    GuiConfig
+#   Exceptions
+#   Extentions
+#   GuiConfig
     Messages
     Misc
     Permissions
