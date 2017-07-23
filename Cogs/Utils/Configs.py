@@ -9,7 +9,7 @@ def getServerJson(serverID):
     Returns the JSON config for a server
     '''
 
-    return getWorkingJson('ServerConfigs', serverID)
+    return getWorkingJson('ServerConfigs', str(serverID))
 
 
 def saveServerJson(serverID, jsonData):
@@ -17,7 +17,7 @@ def saveServerJson(serverID, jsonData):
     Writes a JSON file into savedata
     '''
 
-    saveWorkingJson('ServerConfigs', serverID, jsonData)
+    saveWorkingJson('ServerConfigs', str(serverID), jsonData)
 
 
 def getMoneyJson(serverID):
@@ -25,7 +25,7 @@ def getMoneyJson(serverID):
     Returns the JSON config for a server
     '''
 
-    return getWorkingJson('ServerMoney', serverID)
+    return getWorkingJson('ServerMoney', str(serverID))
 
 
 def saveMoneyJson(serverID, jsonData):
@@ -33,7 +33,7 @@ def saveMoneyJson(serverID, jsonData):
     Writes a JSON file into savedata
     '''
 
-    saveWorkingJson('ServerMoney', serverID, jsonData)
+    saveWorkingJson('ServerMoney', str(serverID), jsonData)
 
 
 def getWorkingJson(folder, serverID):
@@ -111,22 +111,3 @@ def getTokens():
 
     # Return it to user
     return tokenReading
-
-
-def getRedditInstances():
-    '''
-    Gets all the stored Discord user IDs which are tied to refresh tokens for reddit
-    '''
-
-    with open(workingDirectory + '/../../redditInstances.json') as a:
-        tokenReading = loads(a.read())
-
-    return tokenReading
-
-
-def saveRedditInstances(data):
-    '''
-    Stores some saved reddit instances
-    '''
-    with open(workingDirectory + '/../../redditInstances.json', 'w') as a:
-        a.write(dumps(data, indent=4))
