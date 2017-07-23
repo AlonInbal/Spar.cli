@@ -12,7 +12,7 @@ class PrintableMessage(object):
 
     def __init__(self, message):
         self.message = message 
-        self.guild = message.server 
+        self.guild = message.guild 
         self.channel = message.channel if self.guild else 'None'
         self.author = message.author
         self.content = message.clean_content.replace('\n', '\\n')
@@ -28,8 +28,8 @@ class PrintableMessage(object):
             timestamp = ' ' * (PrintableMessage.MAX_TIMESTAMP_LENGTH - len(timestamp)) + timestamp 
         workingOutput.append(timestamp)
 
-        # Add on the boolean for server or PMs
-        private = {False:'Server',True:'PMs'}[self.private]
+        # Add on the boolean for guild or PMs
+        private = {False:'Guild',True:'PMs'}[self.private]
         if len(private) < PrintableMessage.MAX_PRIVATE_BOOL:
             private = ' ' * (PrintableMessage.MAX_PRIVATE_BOOL - len(private)) + private 
         workingOutput.append(private)

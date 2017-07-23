@@ -70,14 +70,15 @@ def makeEmbed(**kwargs):
         if v == 0:
             description = 'Support me at https://patreon.com/CallumBartlett c:'
         elif v == 1:
-            description = 'Use the `invite` command to add me to your own server!'
+            description = 'Use the `invite` command to add me to your own guild!'
     elif description == None:
         description = Empty
 
     # Filter the colour into a usable form
+    # This may not work any more on the rewrite
     if type(colour).__name__ == 'Message':
         colour = colour.author.colour.value
-    elif type(colour).__name__ == 'Server':
+    elif type(colour).__name__ == 'Guild':
         colour = colour.me.colour.value 
     elif type(colour).__name__ == 'Member':
         colour = colour.colour.value

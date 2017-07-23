@@ -2,10 +2,15 @@ from discord import Object, Server, Channel
 from .Configs import getServerJson
 
 
-def serverEnables(serverID, typeOfEnable):
-    '''Gets the enabled and disabled things on the server'''
+# This util is a mess
 
-    # Get the server configuration
+
+def serverEnables(serverID, typeOfEnable):
+    '''
+    Gets the enabled and disabled things on the guild
+    '''
+
+    # Get the guild configuration
     serverConfig = getServerJson(serverID)
 
     # See if the response is enabled
@@ -77,6 +82,6 @@ async def sendIfEnabled(sparcli, serverOrChannel, typeOfEnable, *, embed=None, o
     # Send the specified message
     messageToSend = '' if messageToSend == None else messageToSend
     if edit == None:
-        await sparcli.send_message(toSendTo, messageToSend, embed=embed)
+        await toSendTo.edit(messageToSend, embed=embed)
     else:
-        await sparcli.edit_message(edit, messageToSend, embed=embed)
+        await edit.edit(messageToSend, embed=embed)

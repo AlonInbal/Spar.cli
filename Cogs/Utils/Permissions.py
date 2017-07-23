@@ -13,7 +13,7 @@ def requiredEnabled(**kwargs):
 
     def predicate(ctx):
         token = kwargs.get('enable')
-        serverSettings = getServerJson(ctx.message.server.id)
+        serverSettings = getServerJson(ctx.guild.id)
         enabled = serverSettings['Toggles'][token]
         if enabled:
             return True
@@ -135,16 +135,21 @@ def botPermission(**kwargs):
 
         # Check the bot's permissions
         if compare == False:
+
             # No comparison, just say whether the bot can do it
             x = getattr(perms, check)
             if x == True:
                 return x
             raise BotMissingPermissions
+
         elif getattr(perms, check) == False:
+
             # Compare, but the bot can't run the command
             raise BotMissingPermissions
             return False 
+
         else:
+
             # The bot has permission to run the command, now checking if can be run on the
             # tagged member
             pass
