@@ -1,0 +1,35 @@
+MAIN:
+#   _Main
+
+COGS:
+    Admin
+    Animals
+    AutoModerator
+    Bible
+    Config
+    Event_Errors
+    Event_Logging
+    Event_Members
+    Event_Starboard
+    GameStats
+    Internet
+    Misc
+    Music
+    OwnerOnly
+    Random
+    Reddit
+    RobotEvents
+    Roles
+    Steam
+
+UTILS:
+    Configs
+    Exceptions
+    Extentions
+    GuiConfig
+    Messages
+    Misc
+    Permissions
+    PrintableMessage
+    Updates
+    VoiceHandler

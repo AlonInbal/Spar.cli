@@ -22,37 +22,34 @@ def getCommandPrefix(bot, message):
 
 sparcli = commands.Bot(
     command_prefix=getCommandPrefix, 
-    description='ApplePy 2.0, pretty much.', 
+    description='Another general purpose bot, but with quite a few more dumb fun commands.',
     pm_help=True, 
     formatter=commands.formatter.HelpFormatter(show_check_failure=True),
-    max_messages=50000
+    max_messages=5000
 )
 
 
 @sparcli.event
-async def on_server_join(server):
+async def on_guild_join(guild):
     # Runs when the bot joins a server
     # Create a config file for the server it joined
-    z = getServerJson(server.id)
+    z = getServerJson(guild.id)
     z = fixJson(z)
-    saveServerJson(server.id, z)
+    saveServerJson(guild.id, z)
 
     # Say hi
-    toSay = 'Hey! I\'ve just been added to this server. I\'m Spar.cli, and I\'ll try and do a good job c;'
+    toSay = 'Hey! I\'ve just been added to this guild. I\'m Spar.cli, and I\'ll try and do a good job c;'
     try:
-        await sparcli.send_message(server, toSay)
+        await guild.default_channel.send_message(guild, toSay)
     except Exception:
-        try:
-            await sparcli.send_message(server.owner, toSay)
-        except Exception:
-            pass
+        pass
 
 
 @sparcli.event
 async def on_message_edit(before, after):
     # Get the last message from the channel
     editedIDs = []
-    async for message in sparcli.logs_from(after.channel, limit=3):
+    async for message in after.history(limit=3):
         editedIDs.append(message.id)
 
     # Check if the edited message and the last few messages are the same;
@@ -91,10 +88,10 @@ async def on_ready():
             print('Failed to load extension {}\n{}'.format(extension, exc))
 
     # Load up any changes that would have been made to the configs
-    for server in sparcli.servers:
-        z = getServerJson(server.id)
+    for guild in sparcli.guilds:
+        z = getServerJson(guild.id)
         z = fixJson(z)
-        saveServerJson(server.id, z)
+        saveServerJson(guild.id, z)
 
     # Reccursively fix any globals too
     z = getServerJson('Globals')
@@ -103,7 +100,8 @@ async def on_ready():
 
     # Changed the bot's game
     game = '@Spar.cli help'
-    await sparcli.change_presence(game=discord.Game(name=game))
+    g = discord.Game(name=game)
+    await sparcli.change_presence(game=g)
 
 
 sparcli.run(argv[1])
