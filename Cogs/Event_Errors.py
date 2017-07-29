@@ -39,6 +39,18 @@ class ErrorManagement:
         elif isinstance(error, CommandDisabled):
             # The command is disabled in the configs
             toSay = 'This command is disabled in the configuration for this server.'
+
+        elif isinstance(error, commands.errors.MissingRequiredArgument):
+            # Command was run improperly - missing arg
+            toSay = 'Woah, it looks like you didn\'t run this command properly! Check out the help command to see how to use it.'
+
+        elif isinstance(error, commands.errors.TooManyArguments):
+            # Command was run improperly - extra arg
+            toSay = 'Woah, it looks like you didn\'t run this command properly! Check out the help command to see how to use it.'
+
+        elif isinstance(error, commands.errors.BadArgument):
+            # Command was run improperly - improper arg
+            toSay = 'Woah, it looks like you didn\'t run this command properly! Check out the help command to see how to use it.'
             
         elif isinstance(error, commands.errors.CheckFailure):
             # This should never really occur
