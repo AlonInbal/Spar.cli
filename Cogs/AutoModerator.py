@@ -1,3 +1,4 @@
+from re import search
 from discord.ext import commands
 from Cogs.Utils.Configs import getServerJson
 
@@ -30,10 +31,30 @@ class AutoModerator:
 
         # There's an invite code
         await self.sparcli.delete_message(message)
+
+    async def deleteRegex(self, message):
+        '''
+        Automatically delete server invites
+        '''
+
+        # Check the server configs
+        serverSettings = getServerJson(message.server.id)
+        whatToMatch = serverSettings['DeleteRegex']
+        if not whatToMatch:
+            return
+
+        # Match the regex
+        matches = search(whatToMatch, message.content)
+        if matches:
+            await self.sparcli.delete_message(message)
         
 
     async def on_message(self, message):
         await self.deleteServerInvtes(message)
+        try:
+            await self.deleteRegex(message)
+        except Exception:
+            pass
 
     async def on_member_update(self, before, after):
         '''

@@ -188,6 +188,19 @@ class Admin:
         await self.sparcli.edit_server(server, icon=iconContent)
         await self.sparcli.say('Server icon has been updated.')
 
+    @commands.command(pass_context=True)
+    @permissionChecker(check='manage_messages')
+    @botPermission(check='manage_messages')
+    async def deletionregex(self, ctx, *, regex:str=''):
+        '''
+        Sets the deletion regex of the server
+        '''
+
+        serverSettings = getServerJson(ctx.message.server.id)
+        serverSettings['DeleteRegex'] = regex
+        saveServerJson(ctx.message.server.id, serverSettings)
+        await self.sparcli.say('Deletion regex has been updated.')        
+
 
 def setup(bot):
     bot.add_cog(Admin(bot))

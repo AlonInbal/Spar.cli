@@ -32,5 +32,6 @@
     "ForcedNicknames": {
     },
     "OnJoin": "",
-    "OnBotJoin": ""
+    "OnBotJoin": "",
+    "DeleteRegex": ""
 }

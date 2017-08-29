@@ -64,7 +64,7 @@ class GameStats(object):
         await self.sparcli.say('', embed=e)
 
     @commands.command(pass_context=True, aliases=['ow'])
-    async def overwatch(self, ctx, *, battleTag:str, playType:str='quickplay'):
+    async def overwatch(self, ctx, *, battleTag:str, playType:str='quickplay/competitive'):
         '''
         Gives you an overview of some Overwatch stats for the PC
         '''
@@ -80,7 +80,7 @@ class GameStats(object):
         await self.overwatchStats(ctx, battleTag, 'pc', playType)
 
     @commands.command(pass_context=True)
-    async def overwatchps4(self, ctx, *, battleTag:str, playType:str='quickplay'):
+    async def overwatchps4(self, ctx, *, battleTag:str, playType:str='quickplay/competitive'):
         '''
         Gives you an overview of some Overwatch stats for PSN
         '''
